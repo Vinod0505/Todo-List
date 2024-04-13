@@ -50,7 +50,7 @@ const App = () => {
       <button className=' bg-slate-500 px-4 py-2 m-5 rounded text-2xl text-white font-bold' >Add Task</button>
     </form>
     <hr />
-    <div className='p-8 bg-slate-400 text-2xl text-bold '>
+    <div className='p-6 bg-slate-200 text-2xl text-bold '>
       <ul>{renderTask}</ul>
     </div>
     </>
