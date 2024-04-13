@@ -2,31 +2,45 @@ import React ,{useState}from 'react'
 
 const App = () => {
   const [title, settitle] = useState("")
-  const [desc, setdesc] = useState("")
   const [maintask, setMaintask] = useState([])
 
   const submitHandler =(e)=>{
       e.preventDefault();
-      setMaintask([...maintask,{title,desc}]);
+      setMaintask([...maintask,{title}]);
       settitle("")
-      setdesc("")
       console.log(maintask)
   };
-
-  let renderTask =<h2>No task available</h2>
+    const deleteHandler =(i)=>{
+      let copyTask =[...maintask]
+      copyTask.splice(i,1)
+      setMaintask(copyTask)
+    }
+  let renderTask =<h2 className='text-black'>No Task Available</h2>
   if(maintask.length>0){
       renderTask = maintask.map((t,i)=>{
-        return (<div className='flex justify-between mb-5 '>
-          <h5 className='text-2xl font-semibold'>{t.title}</h5>
-          <h4 className='text-xl font-semibold '>{t.desc}</h4>
+        return (
+        <li key={i} className='flex items-center justify-between mb-4'>
+        <div className='flex justify-between -mb-2 w-2/3'>
+          <div className=''><h5 className=''>{t.title}</h5></div>
         </div>
+        <button 
+        onClick={()=>{
+          deleteHandler(i)
+        }}
+        className='bg-red-600 rounded font-bold px-4 py-2 text-white text-xl'>
+          Delete
+          </button>
+        </li>
         )
       })
   }
 
+  
+
   return (
     <>
-    <h1 className='font-bold bg-black text-5xl text-center text-white'>My Todo List</h1>
+    <div className=''>
+    <h1 className='font-bold text-4xl text-center text-amber-100 m-5'>My Todo List</h1>
     <form onSubmit={submitHandler}>
 
       <input type="text" 
@@ -37,21 +51,13 @@ const App = () => {
         settitle(e.target.value)
       }}
       />
-
-      <input type="text" 
-      className='border-2 border-black m-8 px-8 py-2 text-2xl '
-      placeholder='Enter Description here'
-      value={desc}
-      onChange={(e)=>{
-        setdesc(e.target.value)
-      }}
-      />
-
       <button className=' bg-slate-500 px-4 py-2 m-5 rounded text-2xl text-white font-bold' >Add Task</button>
     </form>
     <hr />
-    <div className='p-6 bg-slate-200 text-2xl text-bold '>
+    <h1 className='m-5 px-4 py-2 text-center font-bold text-3xl text-lime-100'>Tasks</h1>
+    <div className='py-4 px-8 text-2xl text-bold  text-wrap  break-after-all '>
       <ul>{renderTask}</ul>
+    </div>
     </div>
     </>
   )
